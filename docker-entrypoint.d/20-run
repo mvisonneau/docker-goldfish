@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "-> Starting Goldfish"
+/usr/local/bin/goldfish -config=/etc/goldfish/config.hcl

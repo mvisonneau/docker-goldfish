@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "-> Configuring Goldfish"
+
+# VARIABLES
+export VAULT_ADDR=${VAULT_ADDR:-"http://vault:8200"}
+
+# CONFIGURE
+/usr/local/bin/confd -onetime -backend env

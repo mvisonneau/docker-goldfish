@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+DIR=/docker-entrypoint.d
+
+if [ -d "${DIR}" ]; then
+  /bin/run-parts --exit-on-error "${DIR}"
+fi

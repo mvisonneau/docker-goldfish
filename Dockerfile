@@ -10,11 +10,11 @@ ADD confd /etc/confd
 ADD https://github.com/Caiyeon/goldfish/releases/download/${GOLDFISH_VERSION}/goldfish-linux-amd64 /usr/local/bin/goldfish
 
 RUN \
-apk --no-cache add bash ca-certificates ;\
+apk --no-cache add bash ca-certificates openssl ;\
 chmod +x /usr/local/bin/goldfish /usr/local/bin/confd ;\
 mkdir -p /etc/goldfish
 
-EXPOSE 8000
+EXPOSE 443
 
 # CONTAINER ENTRYPOINT
 ADD docker-entrypoint /docker-entrypoint

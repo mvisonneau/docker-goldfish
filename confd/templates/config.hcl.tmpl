@@ -2,11 +2,17 @@
 listener "tcp" {
   # [Required] [Format: "address", "address:port", or ":port"]
   # goldfish's listening address and/or port. Simply ":443" would suffice.
-  address = "0.0.0.0:8000"
+  address = "{{ getenv "GOLDFISH_LISTEN_ADDRESS" }}"
 
   # [Optional] [Default: 0] [Allowed values: 0, 1]
   # set to 1 to disable tls & https
-  tls_disable = 1
+  tls_disable = 0
+
+  # A certificate in order to get a TLS listener
+  certificate "local" {
+    cert_file = "/etc/ssl/goldfish.crt"
+    key_file  = "/etc/ssl/goldfish.key"
+  }
 }
 
 # [Required] vault defines how goldfish should bootstrap to vault
@@ -17,23 +23,23 @@ vault {
 
   # [Optional] [Default: 0] [Allowed values: 0, 1]
   # Set this to 1 to skip verifying the certificate of vault (e.g. self-signed certs)
-  tls_skip_verify = 0
+  tls_skip_verify = "{{ getenv "VAULT_SKIP_VERIFY" }}"
 
   # [Required] [Default: "secret/goldfish"]
   # This should be a generic secret endpoint where runtime settings are stored
   # See wiki for what key values are required in this
-  runtime_config = "secret/goldfish"
+  runtime_config = "{{ getenv "GOLDFISH_RUNTIME_CONFIG" }}"
 
   # [Optional] [Default: "auth/approle/login"]
   # You can omit this, unless you mounted approle somewhere weird
-  approle_login = "auth/approle/login"
+  approle_login = "{{ getenv "GOLDFISH_APPROLE_LOGIN" }}"
 
   # [Optional] [Default: "goldfish"]
   # You can omit this if you already customized the approle ID to be 'goldfish'
-  approle_id = "goldfish"
+  approle_id = "{{ getenv "GOLDFISH_APPROLE_ID" }}"
 }
 
 # [Optional] [Default: 0] [Allowed values: 0, 1]
 # Set to 1 to disable mlock. Implementation is similar to vault - see vault docs for details
 # This option will be ignored on unsupported platforms (e.g Windows)
-disable_mlock = 1
+disable_mlock = "{{ getenv "GOLDFISH_DISABLE_MLOCK" }}"

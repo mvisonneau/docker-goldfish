@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+echo "-> Checking SSL key/certs"
+
+if [ ! -f /etc/ssl/goldfish.crt ] || [ ! -f /etc/ssl/goldfish.key ]; then
+  echo "-> No key/certs found, generating dummy ones"
+
+  openssl req \
+    -x509 \
+    -sha256 \
+    -nodes \
+    -days 365 \
+    -newkey rsa:2048 \
+    -keyout /etc/ssl/goldfish.key \
+    -out /etc/ssl/goldfish.crt \
+    -subj "/C=US/O=foo/CN=bar"
+fi

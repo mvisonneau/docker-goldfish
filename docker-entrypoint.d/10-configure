@@ -3,7 +3,13 @@
 echo "-> Configuring Goldfish"
 
 # VARIABLES
+export GOLDFISH_APPROLE_ID=${GOLDFISH_APPROLE_ID:-"goldfish"}
+export GOLDFISH_APPROLE_LOGIN=${GOLDFISH_APPROLE_LOGIN:-"auth/approle/login"}
+export GOLDFISH_DISABLE_MLOCK=${GOLDFISH_DISABLE_MLOCK:-1}
+export GOLDFISH_LISTEN_ADDRESS=${GOLDFISH_LISTEN_ADDRESS:-"0.0.0.0:443"}
+export GOLDFISH_RUNTIME_CONFIG=${GOLDFISH_RUNTIME_CONFIG:-"secret/goldfish"}
 export VAULT_ADDR=${VAULT_ADDR:-"http://vault:8200"}
+export VAULT_SKIP_VERIFY=${VAULT_SKIP_VERIFY:-0}
 
 # CONFIGURE
 /usr/local/bin/confd -onetime -backend env
